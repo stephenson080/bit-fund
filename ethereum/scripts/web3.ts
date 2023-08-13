@@ -1,9 +1,9 @@
 import Web3 from "web3";
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
-let web3 : Web3;
+let web3: Web3;
 
 if (typeof window !== "undefined" && typeof window.ethereum! !== "undefined") {
   // We are in the browser and metamask is running.
@@ -12,7 +12,7 @@ if (typeof window !== "undefined" && typeof window.ethereum! !== "undefined") {
 } else {
   // We are on the server *OR* the user is not running metamask
   const provider = new Web3.providers.HttpProvider(
-    process.env.INFURA_NETWORK
+    `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`
   );
   web3 = new Web3(provider);
 }

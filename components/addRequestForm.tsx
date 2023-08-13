@@ -1,10 +1,10 @@
-import {useState} from 'react';
-import {Container, Message, Form, Modal, Button} from 'semantic-ui-react';
+import { useState } from "react";
+import { Container, Message, Form, Modal, Button } from "semantic-ui-react";
 
-import CampaignInstance from '../ethereum/scripts/campaign';
-import web3 from '../ethereum/scripts/web3';
+import CampaignInstance from "../ethereum/scripts/campaign";
+import web3 from "../ethereum/scripts/web3";
 
-import {IMsg} from '../pages/campaigns/add-project';
+import { IMsg } from "../pages/campaigns/add-project";
 
 interface State {
   amount: string;
@@ -21,9 +21,9 @@ type Props = {
 export default function CreateRequestForm(props: Props) {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState<State>({
-    vendor: '',
-    amount: '',
-    description: '',
+    vendor: "",
+    amount: "",
+    description: "",
   });
   const [msg, setMsg] = useState<IMsg>();
   const [success, setSuccess] = useState(false);
@@ -34,7 +34,7 @@ export default function CreateRequestForm(props: Props) {
       setMsg(undefined);
       setSuccess(false);
       const accounts = await web3.eth.getAccounts();
-      const convertedAmount = web3.utils.toWei(state.amount, 'ether');
+      const convertedAmount = web3.utils.toWei(state.amount, "ether");
       const cam = CampaignInstance(props.address);
 
       await cam.methods
@@ -43,14 +43,14 @@ export default function CreateRequestForm(props: Props) {
           from: accounts[0],
         });
       setMsg({
-        content: 'You have created a new Request',
-        header: 'Operation Successful!',
+        content: "You have created a new Request",
+        header: "Operation Successful!",
       });
       setSuccess(true);
-    } catch (error) {
+    } catch (error: any) {
       setMsg({
         content: error.message,
-        header: 'Oops! Something went wrong!',
+        header: "Oops! Something went wrong!",
       });
     } finally {
       setLoading(false);
@@ -63,13 +63,13 @@ export default function CreateRequestForm(props: Props) {
         <Container>
           Fill in the Form to create a new request
           <Form
-            style={{marginTop: '55px'}}
+            style={{ marginTop: "55px" }}
             loading={loading}
             error={!!msg?.content}
           >
             <Form.Input
               type="text"
-              style={{width: '50%'}}
+              style={{ width: "50%" }}
               label="Amount:"
               size="big"
               placeholder="enter amount for request"
@@ -83,7 +83,7 @@ export default function CreateRequestForm(props: Props) {
             />
             <Form.Input
               type="text"
-              style={{width: '50%'}}
+              style={{ width: "50%" }}
               label="Vendor:"
               size="big"
               placeholder="enter vendor's address"
@@ -97,7 +97,7 @@ export default function CreateRequestForm(props: Props) {
             />
             <Form.Input
               type="text"
-              style={{width: '50%'}}
+              style={{ width: "50%" }}
               label="Description:"
               size="big"
               placeholder="enter a short description of the request"
@@ -111,7 +111,7 @@ export default function CreateRequestForm(props: Props) {
             />
             <Message
               success={success}
-              style={{width: '50%'}}
+              style={{ width: "50%" }}
               error
               content={msg?.content}
               header={msg?.header}
